@@ -1,6 +1,7 @@
 const {Schema, model} = require("mongoose");
 const Joi = require("joi");
 const {handleMongooseError} = require("../middlewares");
+const {ValidateMessages} = require("../utils");
 
 const contactSchema = new Schema(
 	{
@@ -18,6 +19,10 @@ const contactSchema = new Schema(
 			type: Boolean,
 			default: false,
 		},
+		owner: {
+			type: Schema.Types.ObjectId,
+			ref: "user",
+		},
 	},
 	{versionKey: false, timestamps: true},
 );
@@ -26,23 +31,15 @@ contactSchema.post("save", handleMongooseError);
 
 const Contact = model("contact", contactSchema);
 
-const validateMessages = field => {
-	return {
-		"string.base": `${field} should be a type of 'text'`,
-		"string.empty": `${field} cannot be an empty field`,
-		"any.required": `missing required ${field} field`,
-	};
-};
-
 const addSchema = Joi.object({
-	name: Joi.string().required().messages(validateMessages("name")),
-	email: Joi.string().required().messages(validateMessages("email")),
-	phone: Joi.string().required().messages(validateMessages("phone")),
+	name: Joi.string().required().messages(ValidateMessages("name")),
+	email: Joi.string().required().messages(ValidateMessages("email")),
+	phone: Joi.string().required().messages(ValidateMessages("phone")),
 	favorite: Joi.boolean(),
 });
 
 const updateFavoriteSchema = Joi.object({
-	favorite: Joi.boolean().required().messages(validateMessages("favorite")),
+	favorite: Joi.boolean().required().messages(ValidateMessages("favorite")),
 });
 
 module.exports = {Contact, addSchema, updateFavoriteSchema};
