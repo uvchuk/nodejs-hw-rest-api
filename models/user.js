@@ -32,7 +32,7 @@ const User = model("user", userSchema);
 
 const authSchema = Joi.object({
 	email: Joi.string().required().messages(ValidateMessages("email")),
-	password: Joi.string().required().messages(ValidateMessages("phone")),
+	password: Joi.string().required().messages(ValidateMessages("phone")).min(6),
 	subscription: Joi.string().equal(...subscriptionTypes),
 });
 

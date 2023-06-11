@@ -3,8 +3,11 @@ const contacts = require("../../controllers/contacts");
 const {addSchema, updateFavoriteSchema} = require("../../models");
 const {isValidId} = require("../../middlewares");
 const {validateBody} = require("../../decorators");
+const authenticate = require("../../middlewares/authenticate");
 
 const router = express.Router();
+
+router.use(authenticate);
 
 router.get("/", contacts.getAllContacts);
 
