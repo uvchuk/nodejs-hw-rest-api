@@ -21,6 +21,7 @@ const userSchema = new Schema(
 			enum: subscriptionTypes,
 			default: "starter",
 		},
+		avatarURL: String,
 		token: String,
 	},
 	{versionKey: false, timestamps: true},
@@ -45,4 +46,8 @@ const updateSubscriptionSchema = Joi.object({
 		.messages(ValidateMessages("subscription")),
 });
 
-module.exports = {User, authSchema, updateSubscriptionSchema};
+const updateAvatarSchema = Joi.object({
+	avatarURL: Joi.string().required().messages(ValidateMessages("avatar")),
+});
+
+module.exports = {User, authSchema, updateSubscriptionSchema, updateAvatarSchema};
