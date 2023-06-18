@@ -9,9 +9,8 @@ const signup = async (req, res) => {
 	if (user) {
 		throw HttpError(409, "Email in use");
 	}
-
+	const avatarURL = await gravatar.url(req.body.email, {protocol: "http", s: "200"});
 	const hashPassword = await bcrypt.hash(password, 10);
-	const avatarURL = gravatar.url(email, {protocol: "http", s: "100"});
 	const newUser = await User.create({...req.body, password: hashPassword, avatarURL});
 
 	res.status(201).json({

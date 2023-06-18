@@ -46,8 +46,4 @@ const updateSubscriptionSchema = Joi.object({
 		.messages(ValidateMessages("subscription")),
 });
 
-const updateAvatarSchema = Joi.object({
-	avatarURL: Joi.string().required().messages(ValidateMessages("avatar")),
-});
-
-module.exports = {User, authSchema, updateSubscriptionSchema, updateAvatarSchema};
+module.exports = {User, authSchema, updateSubscriptionSchema};

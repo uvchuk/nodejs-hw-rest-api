@@ -5,15 +5,15 @@ const signin = require("./signin");
 const current = require("./current");
 const logout = require("./logout");
 const updateSubscritionType = require("./updateSubscritionType");
-const updateAvatar = require("./updateAvatar");
+const updateUserAvatar = require("./updateUserAvatar");
 
-const user = {
+const auth = {
 	signup: ctrlWrapper(signup),
 	signin: ctrlWrapper(signin),
 	current: ctrlWrapper(current),
 	logout: ctrlWrapper(logout),
 	updateSubscritionType: ctrlWrapper(updateSubscritionType),
-	updateAvatar: ctrlWrapper(updateAvatar),
+	updateUserAvatar: ctrlWrapper(updateUserAvatar),
 };
 
-module.exports = user;
+module.exports = auth;
