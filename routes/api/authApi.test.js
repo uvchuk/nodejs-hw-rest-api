@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const request = require("supertest");
+// const {getType} = require("jest-get-type");
 
 const app = require("../../app");
 const {User} = require("../../models");
@@ -52,6 +53,7 @@ describe("test signin route", () => {
 		};
 		const {body, statusCode} = await request(app).post("/api/users/login").send(signinData);
 		expect(statusCode).toBe(200);
+		expect(body.token).toBeString();
 		expect(body.token).not.toBeUndefined();
 		expect(body.token).not.toBeNull();
 		expect(body.token).not.toBe("");
