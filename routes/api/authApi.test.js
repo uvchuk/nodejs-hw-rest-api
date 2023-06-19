@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const request = require("supertest");
-// const {getType} = require("jest-get-type");
 
 const app = require("../../app");
 const {User} = require("../../models");
@@ -23,7 +22,7 @@ describe("test signup route", () => {
 
 	test("test with correct data", async () => {
 		const signupData = {
-			email: "uvchuk@gmail.com",
+			email: "example@mail.com",
 			password: "123456",
 		};
 		const {body, statusCode} = await request(app).post("/api/users/register").send(signupData);
@@ -48,17 +47,18 @@ describe("test signin route", () => {
 
 	test("test with correct data", async () => {
 		const signinData = {
-			email: "uvchuk@gmail.com",
+			email: "example@mail.com",
 			password: "123456",
 		};
 		const {body, statusCode} = await request(app).post("/api/users/login").send(signinData);
 		expect(statusCode).toBe(200);
-		expect(body.token).toBeString();
 		expect(body.token).not.toBeUndefined();
 		expect(body.token).not.toBeNull();
 		expect(body.token).not.toBe("");
+		expect(body.token).toHaveLength(171);
 
 		const user = await User.findOne({email: signinData.email});
 		expect(user.email).toBe(signinData.email);
+		expect(user.subscription).toBe("starter");
 	});
 });
