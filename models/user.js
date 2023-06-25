@@ -23,6 +23,11 @@ const userSchema = new Schema(
 		},
 		avatarURL: String,
 		token: String,
+		verify: {
+			type: Boolean,
+			default: false,
+		},
+		verificationToken: {type: String, required: [true, "Verify token is required"]},
 	},
 	{versionKey: false, timestamps: true},
 );
@@ -46,4 +51,8 @@ const updateSubscriptionSchema = Joi.object({
 		.messages(ValidateMessages("subscription")),
 });
 
-module.exports = {User, authSchema, updateSubscriptionSchema};
+const resendCodeSchema = Joi.object({
+	email: Joi.string().required().messages(ValidateMessages("email")),
+});
+
+module.exports = {User, authSchema, updateSubscriptionSchema, resendCodeSchema};
